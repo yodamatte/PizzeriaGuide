@@ -13,7 +13,7 @@ namespace PizzeriaGuide.ViewModels
         public ObservableCollection<Pizzeria> Pizzerias { get; set; } = new();
 
         private ICommand _addPizzeriaCommand;
-        public ICommand AddPizzeriaCommand => _addPizzeriaCommand ?? (_addPizzeriaCommand = new CommandHandler(AddPizzeria, null));
+        public ICommand AddPizzeriaCommand => _addPizzeriaCommand ?? (_addPizzeriaCommand = new CommandHandler(AddPizzeria));
 
         private ICommand _removePizzeriaCommand;
         public ICommand RemovePizzeriaCommand => _removePizzeriaCommand ?? (_removePizzeriaCommand = new CommandHandler(RemovePizzeria, HasSelectedItem));
@@ -25,9 +25,9 @@ namespace PizzeriaGuide.ViewModels
             LoadPizzerias();
         }
 
-        public bool HasSelectedItem(object param) => SelectedItem is not null;
+        public bool HasSelectedItem() => SelectedItem is not null;
 
-        public void AddPizzeria(object param)
+        public void AddPizzeria()
         {
             var view = new CreatePizzeriaDialog();
             var viewModel = new CreatePizzeriaDialogViewModel();
@@ -39,7 +39,7 @@ namespace PizzeriaGuide.ViewModels
             }
         }
 
-        public void RemovePizzeria(object param)
+        public void RemovePizzeria()
         {
             Pizzerias.Remove(SelectedItem);
         }

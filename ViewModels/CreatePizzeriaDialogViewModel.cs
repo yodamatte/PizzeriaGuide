@@ -23,9 +23,9 @@ namespace PizzeriaGuide.ViewModels
         public ICommand CreatePizzeriaCommand => _createPizzeriaCommand ?? (_createPizzeriaCommand = new CommandHandler(Create, CanCreate));
 
         private ICommand _cancelCommand;
-        public ICommand CancelCommand => _cancelCommand ?? (_cancelCommand = new CommandHandler(Cancel, null));
+        public ICommand CancelCommand => _cancelCommand ?? (_cancelCommand = new CommandHandler(Cancel));
 
-        public void Create(object param)
+        public void Create()
         {
             _pizzeria = new Pizzeria
             {
@@ -38,26 +38,17 @@ namespace PizzeriaGuide.ViewModels
             CurrentDialogService.Instance.CloseDialog();
         }
 
-        public void Cancel(object param)
+        public void Cancel()
         {
             CurrentDialogService.Instance.CloseDialog();
         }
 
-        public bool CanCreate(object param)
+        public bool CanCreate()
         {
-            if (string.IsNullOrEmpty(Name))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(Address))
-            {
-                return false;
-            }
-            if (string.IsNullOrEmpty(PhoneNumber))
-            {
-                return false;
-            }
-            return true;
+            return 
+                !string.IsNullOrEmpty(Name) &&
+                !string.IsNullOrEmpty(Address) &&
+                !string.IsNullOrEmpty(PhoneNumber);
         }
     }
 }
